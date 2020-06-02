@@ -22,12 +22,39 @@ public class MainActivity extends AppCompatActivity {
             //Criar tabela
             bancoDados.execSQL("CREATE TABLE IF NOT EXISTS pessoas (nome VARCHAR, idade INT(3))");
 
+//            //Deletando registros
+//            bancoDados.execSQL("DELETE FROM pessoas WHERE nome='Leandro Sacchi'");
+//            bancoDados.execSQL("DELETE FROM pessoas WHERE nome='Jamilton Damaesceno'");
+
             //Inserir dados
-            bancoDados.execSQL("INSERT INTO pessoas(nome, idade) VALUES ('Leandro Sacchi', 31)");
-            bancoDados.execSQL("INSERT INTO pessoas(nome, idade) VALUES ('Jamilton Damasceno', 30)");
+//            bancoDados.execSQL("INSERT INTO pessoas(nome, idade) VALUES ('João', 85)");
+//            bancoDados.execSQL("INSERT INTO pessoas(nome, idade) VALUES ('Claudia', 55)");
 
             //Recuperar dados
-            Cursor cursor = bancoDados.rawQuery("SELECT nome, idade FROM pessoas ", null);
+//            String consulta = "SELECT nome, idade FROM pessoas " +
+//                            "WHERE idade>30 or idade=30";
+
+//            String consulta =
+//                    "SELECT nome, idade FROM pessoas " +
+//                            "WHERE nome ='Pedro'";
+
+//            String consulta =
+//                    "SELECT nome, idade FROM pessoas " +
+//                            "WHERE idade IN(30,50)";
+
+//            String consulta =
+//                    "SELECT nome, idade FROM pessoas " +
+//                            "WHERE idade BETWEEN 30 AND 50";
+//            String filtro = "e";
+//            String consulta =
+//                    "SELECT nome, idade FROM pessoas " +
+//                            "WHERE nome LIKE '%"+filtro+"%'";
+
+            String consulta =
+                    "SELECT nome, idade FROM pessoas " +
+                            "ORDER BY nome ASC LIMIT 3";
+
+            Cursor cursor = bancoDados.rawQuery(consulta, null);
 
             //Indices da tabela
             int indiceNome = cursor.getColumnIndex("nome");
@@ -35,8 +62,9 @@ public class MainActivity extends AppCompatActivity {
 
             cursor.moveToFirst();
             while (cursor != null) {
-                Log.i("RESULTADO - nome: ", cursor.getString(indiceNome));
-                Log.i("RESULTADO - idade: ", cursor.getString(indiceIdade));
+                String nome = cursor.getString(indiceNome);
+                String idade = cursor.getString(indiceIdade);
+                Log.i("RESULTADO - nome ", nome + " - idade: "+ idade);
                 cursor.moveToNext();
             }
 
